@@ -14,11 +14,12 @@ RUN \
 COPY configs/nginx/git-http /etc/nginx/sites-enabled/
 RUN rm -f /etc/nginx/sites-enabled/default
 
-VOLUME ["/etc/nginx/sites-enabled", "/var/lib/git"]
+VOLUME ["/etc/nginx/extras", "/var/lib/git"]
 
 CMD \
+  touch -a /etc/nginx/extras/git-http.conf && \
   echo "FCGI_GROUP=${GIT_GROUP}" > /etc/default/fcgiwrap && \
   service fcgiwrap start && \
   service nginx start
 
-EXPOSE 80
+EXPOSE 80 443
