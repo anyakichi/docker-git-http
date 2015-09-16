@@ -11,13 +11,14 @@ RUN \
   echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
   chown -R www-data:www-data /var/lib/nginx
 
-COPY configs/nginx/git-http /etc/nginx/sites-enabled/
+COPY nginx /etc/nginx/
 RUN rm -f /etc/nginx/sites-enabled/default
 
-VOLUME ["/etc/nginx/extras", "/var/lib/git"]
+VOLUME ["/etc/nginx/sites-enabled", "/var/lib/git"]
 
 CMD \
-  touch -a /etc/nginx/extras/git-http.conf && \
+  [ ! -f /etc/nginx/sites-enabled/git-http ] && \
+    cp /etc/nginx/sites-available/git-http /etc/nginx/sites-enabled/; \
   echo "FCGI_GROUP=${GIT_GROUP}" > /etc/default/fcgiwrap && \
   service fcgiwrap start && \
   service nginx start
