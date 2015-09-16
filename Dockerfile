@@ -14,7 +14,7 @@ RUN \
 COPY nginx /etc/nginx/
 RUN rm -f /etc/nginx/sites-enabled/default
 
-VOLUME ["/etc/nginx/sites-enabled", "/var/lib/git"]
+VOLUME ["/etc/nginx/sites-enabled", "/var/lib/git", "/var/lib/git-http"]
 
 CMD \
   [ ! -f /etc/nginx/sites-enabled/git-http ] && \
