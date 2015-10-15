@@ -15,7 +15,8 @@ COPY nginx /etc/nginx/
 RUN mkdir /etc/gitweb
 RUN rm -f /etc/nginx/sites-enabled/default
 
-VOLUME ["/etc/gitweb", "/etc/nginx/sites-enabled", "/var/lib/git"]
+VOLUME ["/etc/gitweb", "/etc/nginx/sites-enabled", "/var/lib/git", \
+        "/var/lib/git-http"]
 
 CMD \
   [ ! -f /etc/nginx/sites-enabled/git-http ] && \
